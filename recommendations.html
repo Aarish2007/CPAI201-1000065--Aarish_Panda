@@ -1,0 +1,148 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fashion Product Recommendation</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            .container { max-width: 1200px; margin: 0 auto; }
+            .filter-section, .results-section { margin-bottom: 20px; }
+            .product { border: 1px solid #ccc; padding: 10px; margin: 10px; display: inline-block; width: 30%; box-sizing: border-box; }
+            .product img { max-width: 100%; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Fashion Product Recommendation System</h1>
+
+            <div class="filter-section">
+                <h2>Filters</h2>
+                <form action="recommend.html" method="get">
+                    <label for="user_input">Search:</label>
+                    <input type="text" id="user_input" name="user_input" required><br><br>
+
+                    <label for="min_price">Min Price:</label>
+                    <input type="number" id="min_price" name="min_price" min="321" value="321"><br><br>
+
+                    <label for="max_price">Max Price:</label>
+                    <input type="number" id="max_price" name="max_price" max="6819" value="6819"><br><br>
+
+                    <label for="rating_filter">Minimum Rating:</label>
+                    <input type="number" id="rating_filter" name="rating_filter" min="0" max="5" value="0"><br><br>
+
+                    <label for="brand_filter">Brand:</label>
+                    <select id="brand_filter" name="brand_filter">
+                        <option value="">All</option>
+                        <option value="United Colors of Benetton">United Colors of Benetton</option><option value="AD By Arvind">AD By Arvind</option><option value="THE BEAR HOUSE">THE BEAR HOUSE</option><option value="The Indian Garage Co">The Indian Garage Co</option><option value="Snitch">Snitch</option><option value="KETCH">KETCH</option><option value="Roadster">Roadster</option><option value="Blackberrys">Blackberrys</option><option value="HIGHLANDER">HIGHLANDER</option><option value="Campus Sutra">Campus Sutra</option><option value="Banana Club">Banana Club</option><option value="Andamen">Andamen</option><option value="Mast & Harbour">Mast & Harbour</option><option value="INVICTUS">INVICTUS</option><option value="Powerlook">Powerlook</option><option value="HERE&NOW">HERE&NOW</option><option value="Lee">Lee</option><option value="Arrow">Arrow</option><option value="H&M">H&M</option><option value="PINACOLADA">PINACOLADA</option><option value="The Souled Store">The Souled Store</option><option value="DL Woman">DL Woman</option><option value="High Star">High Star</option><option value="Strong And Brave">Strong And Brave</option><option value="Urban Sundari">Urban Sundari</option><option value="ONLY">ONLY</option><option value="Style Quotient">Style Quotient</option><option value="SASSAFRAS">SASSAFRAS</option><option value="Urbano Fashion">Urbano Fashion</option><option value="Levis">Levis</option><option value="Flying Machine">Flying Machine</option><option value="Bushirt">Bushirt</option><option value="Kotty">Kotty</option><option value="Pepe Jeans">Pepe Jeans</option><option value="Basics By Tokyo Talkies">Basics By Tokyo Talkies</option><option value="IVOC">IVOC</option><option value="VESTIDO MODAS">VESTIDO MODAS</option><option value="Friskers">Friskers</option><option value="Lux Cozi">Lux Cozi</option><option value="U.S. Polo Assn.">U.S. Polo Assn.</option><option value="Raymond">Raymond</option><option value="Van Heusen">Van Heusen</option><option value="FableStreet">FableStreet</option><option value="Jockey">Jockey</option><option value="CULT">CULT</option><option value="Dreamz by Pantaloons">Dreamz by Pantaloons</option><option value="Marks & Spencer">Marks & Spencer</option><option value="Mr Bowerbird">Mr Bowerbird</option><option value="AND">AND</option><option value="DressBerry">DressBerry</option><option value="Roadster Fast and Furious">Roadster Fast and Furious</option><option value="U.S. Polo Assn. Denim Co.">U.S. Polo Assn. Denim Co.</option><option value="StyleCast x Revolte">StyleCast x Revolte</option><option value="Dennis Lingo">Dennis Lingo</option><option value="HRX by Hrithik Roshan">HRX by Hrithik Roshan</option><option value="BAESD">BAESD</option><option value="Tokyo Talkies">Tokyo Talkies</option><option value="KICA">KICA</option><option value="Jompers">Jompers</option><option value="VASTRADO">VASTRADO</option><option value="VASTRAMAY">VASTRAMAY</option><option value="Anouk">Anouk</option><option value="Sangria">Sangria</option><option value="ADA">ADA</option><option value="Vishudh">Vishudh</option><option value="GoSriKi">GoSriKi</option><option value="Inddus">Inddus</option><option value="Libas">Libas</option><option value="Biba">Biba</option><option value="KISAH">KISAH</option><option value="amzira">amzira</option><option value="Tikhi Imli">Tikhi Imli</option><option value="KALINI">KALINI</option><option value="all about you">all about you</option><option value="SWADESI STUFF">SWADESI STUFF</option><option value="RACHNA">RACHNA</option>
+                    </select><br><br>
+
+                    <label for="category_filter">Category:</label>
+                    <select id="category_filter" name="category_filter">
+                        <option value="">All</option>
+                        <option value="shirts">shirts</option><option value="jeans">jeans</option><option value="tshirts">tshirts</option><option value="sweaters">sweaters</option><option value="jackets">jackets</option><option value="kurta">kurta</option><option value="sherwani">sherwani</option><option value="saree">saree</option>
+                    </select><br><br>
+
+                    <button type="submit">Recommend</button>
+                </form>
+            </div>
+
+            <div class="results-section">
+                <h2>Recommendations</h2>
+                
+                <div class="product">
+                    <a href="https://www.myntra.com/lounge-tshirts/van+heusen/van-heusen-women-anti-bacterial-round-neck-34th-sleeve-thermal-vest/21603924/buy" target="_blank">
+                        <img src="https://assets.myntassets.com/dpr_2,q_60,w_210,c_limit,fl_progressive/assets/images/21603924/2023/2/9/bd9b335c-0c28-41d8-8851-025f02117cc31675920536880-Antibacterial-Thermal-Threefourth-Sleeved-Vest-5816759205363-1.jpg" alt="Product Image">
+                        <p><strong>Brand:</strong> Van Heusen</p>
+                        <p><strong>Category:</strong> tshirts</p>
+                        <p><strong>Rating:</strong> 4.4</p>
+                        <p><strong>Price:</strong> ₹613</p>
+                    </a>
+                </div>
+                
+                <div class="product">
+                    <a href="https://www.myntra.com/tshirts/fablestreet/fablestreet-solid-round-neck-t-shirt/23669418/buy" target="_blank">
+                        <img src="https://assets.myntassets.com/dpr_2,q_60,w_210,c_limit,fl_progressive/assets/images/23669418/2024/8/10/f1ab48ec-a1ba-4557-90da-e38a9aa07fe11723280047374-FableStreet-Solid-Round-Neck-T-shirt-9201723280047290-6.jpg" alt="Product Image">
+                        <p><strong>Brand:</strong> FableStreet</p>
+                        <p><strong>Category:</strong> tshirts</p>
+                        <p><strong>Rating:</strong> 4.3</p>
+                        <p><strong>Price:</strong> ₹1356</p>
+                    </a>
+                </div>
+                
+                <div class="product">
+                    <a href="https://www.myntra.com/tshirts/friskers/friskers-women-typography-printed-round-neck-cotton-oversized-t-shirt/30905108/buy" target="_blank">
+                        <img src="https://assets.myntassets.com/dpr_2,q_60,w_210,c_limit,fl_progressive/assets/images/2024/SEPTEMBER/9/2J8qfdLd_184c5da8038e4b3197d7395a1d8225a7.jpg" alt="Product Image">
+                        <p><strong>Brand:</strong> Friskers</p>
+                        <p><strong>Category:</strong> tshirts</p>
+                        <p><strong>Rating:</strong> 4.7</p>
+                        <p><strong>Price:</strong> ₹629</p>
+                    </a>
+                </div>
+                
+                <div class="product">
+                    <a href="https://www.myntra.com/tshirts/friskers/friskers-women-graphic-printed-round-neck-cotton-oversized-t-shirt/30905106/buy" target="_blank">
+                        <img src="https://assets.myntassets.com/dpr_2,q_60,w_210,c_limit,fl_progressive/assets/images/2024/SEPTEMBER/9/vSjcUBZK_81d9c02396e7472393a501c65243cf96.jpg" alt="Product Image">
+                        <p><strong>Brand:</strong> Friskers</p>
+                        <p><strong>Category:</strong> tshirts</p>
+                        <p><strong>Rating:</strong> 4.7</p>
+                        <p><strong>Price:</strong> ₹629</p>
+                    </a>
+                </div>
+                
+                <div class="product">
+                    <a href="https://www.myntra.com/lounge-tshirts/jockey/jockey-micro-modal-cotton-relaxed-fit-tshirt-with-curved-hem-styling-rx21/11862830/buy" target="_blank">
+                        <img src="https://assets.myntassets.com/dpr_2,q_60,w_210,c_limit,fl_progressive/assets/images/11862830/2024/1/29/0602b630-dc26-4bf1-8675-610ea7de52061706528451703JockeyWomenBlackSolidLoungeT-shirt1.jpg" alt="Product Image">
+                        <p><strong>Brand:</strong> Jockey</p>
+                        <p><strong>Category:</strong> tshirts</p>
+                        <p><strong>Rating:</strong> 4.3</p>
+                        <p><strong>Price:</strong> ₹779</p>
+                    </a>
+                </div>
+                
+                <div class="product">
+                    <a href="https://www.myntra.com/tshirts/raymond/raymond-polo-collar-t-shirt/26760098/buy" target="_blank">
+                        <img src="https://assets.myntassets.com/dpr_2,q_60,w_210,c_limit,fl_progressive/assets/images/26760098/2024/8/13/0ef5ee52-53b2-4cb4-9509-ccf32d6d9a031723527424098-Raymond-Men-Tshirts-2041723527423610-1.jpg" alt="Product Image">
+                        <p><strong>Brand:</strong> Raymond</p>
+                        <p><strong>Category:</strong> tshirts</p>
+                        <p><strong>Rating:</strong> 4.4</p>
+                        <p><strong>Price:</strong> ₹934</p>
+                    </a>
+                </div>
+                
+                <div class="product">
+                    <a href="https://www.myntra.com/shirts/only/only-onlcabbage-ls-striped-spread-collar-pure-cotton-casual-shirt/29208696/buy" target="_blank">
+                        <img src="https://assets.myntassets.com/dpr_2,q_60,w_210,c_limit,fl_progressive/assets/images/29208696/2024/4/26/94db531c-ecb5-462f-bd3b-88576109e2381714119060484ONLYWomenOpaqueStripedCasualShirt1.jpg" alt="Product Image">
+                        <p><strong>Brand:</strong> ONLY</p>
+                        <p><strong>Category:</strong> shirts</p>
+                        <p><strong>Rating:</strong> 4.1</p>
+                        <p><strong>Price:</strong> ₹1259</p>
+                    </a>
+                </div>
+                
+                <div class="product">
+                    <a href="https://www.myntra.com/shirts/urban+sundari/urban-sundari-spread-collar-classic-opaque-shimmer-shirt/26317602/buy" target="_blank">
+                        <img src="https://assets.myntassets.com/dpr_2,q_60,w_210,c_limit,fl_progressive/assets/images/26317602/2023/12/8/40bdceca-7e9b-4690-b709-24bf1af822fe1702025290774UrbanSundariWomenBlackClassicOpaqueCasualShirt1.jpg" alt="Product Image">
+                        <p><strong>Brand:</strong> Urban Sundari</p>
+                        <p><strong>Category:</strong> shirts</p>
+                        <p><strong>Rating:</strong> 4.3</p>
+                        <p><strong>Price:</strong> ₹1260</p>
+                    </a>
+                </div>
+                
+                <div class="product">
+                    <a href="https://www.myntra.com/shirts/here%26now/herenow-ribbed-cuban-collar-corduroy-oversized-casual-shirt/26428062/buy" target="_blank">
+                        <img src="https://assets.myntassets.com/dpr_2,q_60,w_210,c_limit,fl_progressive/assets/images/26428062/2023/12/14/279e43a8-361f-4491-9177-a91b24364b551702574025215HERENOWMenBrownCasualShirt6.jpg" alt="Product Image">
+                        <p><strong>Brand:</strong> HERE&NOW</p>
+                        <p><strong>Category:</strong> shirts</p>
+                        <p><strong>Rating:</strong> 4.2</p>
+                        <p><strong>Price:</strong> ₹839</p>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </body>
+    </html>
+    
