@@ -117,8 +117,8 @@ def main():
     st.set_page_config(page_title='Shophoria - Fashion Recommendations', page_icon='🛍️', layout='wide')
 
     # U-shaped filter and Shophoria logo
-    logo_path = 'Shophira\images\logo.png'
-    st.sidebar.image(logo_path, width=200)
+    #logo_path = "AARISH SIS/Shophira/images/logo.png"
+    #st.sidebar.image(logo_path, width=200)
     st.sidebar.header("Shophoria Personalized Fashion Recommendation")
     
     # Suggestion box for playing the quiz game

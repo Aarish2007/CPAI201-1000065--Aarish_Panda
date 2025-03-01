@@ -8,7 +8,7 @@ app = Flask(__name__)
 def start_streamlit():
     try:
         # Command to start Streamlit
-        streamlit_cmd = ['streamlit', 'run', os.path.join("C:\Users\AARISH\OneDrive\Desktop\capstone123", "app.py")]
+        streamlit_cmd = ['streamlit', 'run', os.path.join("C:\Users\AARISH\OneDrive\Desktop\capstone123\AARISH SIS", "app.py")]
         subprocess.Popen(streamlit_cmd, shell=True)  # Run as a background process
         return jsonify({"status": "success", "message": "Streamlit server started"}), 200
     except Exception as e:

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAI Voice Chat</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e2f;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        h1 {
+            color: #4caf50;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 600px;
+            background: #2c2c3c;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: 400px;
+            margin-bottom: 20px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #1e1e2f;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .message.user {
+            background-color: #4caf50;
+            color: #fff;
+            text-align: right;
+            align-self: flex-end;
+        }
+
+        .message.ai {
+            background-color: #444;
+            color: #ddd;
+            text-align: left;
+            align-self: flex-start;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #2c2c3c;
+            color: #fff;
+        }
+
+        input[type="text"]::placeholder {
+            color: #aaa;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+    </style>
+    <script>
+        async function startListening() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onresult = async (event) => {
+                const transcript = event.results[0][0].transcript;
+                addMessage(transcript, 'user');
+                const response = await queryOpenAI(transcript);
+                addMessage(response, 'ai');
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+                alert('Speech recognition error: ' + event.error);
+            };
+
+            recognition.start();
+        }
+
+        async function queryOpenAI(inputText) {
+            const apiKey = "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"; // Replace with your OpenAI API key
+            const endpoint = "https://api.openai.com/v1/chat/completions";
+
+            try {
+                const response = await axios.post(endpoint, {
+                    model: "gpt-3.5-turbo",
+                    messages: [{ role: "user", content: inputText }],
+                    max_tokens: 150
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    }
+                });
+
+                return response.data.choices[0].message.content;
+            } catch (error) {
+                console.error('Error querying OpenAI:', error);
+                return 'Sorry, there was an error processing your request.';
+            }
+        }
+
+        function addMessage(content, sender) {
+            const messagesContainer = document.querySelector('.messages');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.textContent = content;
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function sendMessage() {
+            const inputField = document.getElementById('user-input');
+            const inputText = inputField.value.trim();
+            if (inputText) {
+                addMessage(inputText, 'user');
+                queryOpenAI(inputText).then(response => {
+                    addMessage(response, 'ai');
+                });
+                inputField.value = '';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>OpenAI Voice Chat</h1>
+    <div class="chat-container">
+        <div class="messages" id="messages"></div>
+        <div class="controls">
+            <input type="text" id="user-input" placeholder="Type your message here...">
+            <button onclick="sendMessage()">Send</button>
+            <button onclick="startListening()">🎤 Speak</button>
+        </div>
+    </div>
+</body>
+</html>
